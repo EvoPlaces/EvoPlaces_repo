@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        locationServiceManager = new LocationServiceManager();
+        locationServiceManager = new LocationServiceManager(getApplicationContext(), MapsActivity.this);
         EvoPlacesMap = new GoogleMap();
 
         getCoordinate = (ImageButton) findViewById(R.id.getCordinate_imgbttn_map_id);
