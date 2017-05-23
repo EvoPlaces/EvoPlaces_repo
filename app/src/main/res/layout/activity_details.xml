@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="yqr.ghonche.evoplaces.MainActivity1">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="name"
+        android:ems="10"
+        android:layout_marginLeft="51dp"
+        android:id="@+id/name_edittxt_id"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="phone"
+        android:ems="10"
+        android:layout_below="@+id/name_edittxt_id"
+        android:layout_marginTop="29dp"
+        android:id="@+id/phone_edittxt_id"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="category"
+        android:ems="10"
+        android:layout_below="@+id/phone_edittxt_id"
+        android:layout_alignRight="@+id/phone_edittxt_id"
+        android:layout_alignEnd="@+id/phone_edittxt_id"
+        android:layout_marginTop="30dp"
+        android:id="@+id/category_edittxt_id"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="address"
+        android:ems="10"
+        android:layout_below="@+id/category_edittxt_id"
+        android:layout_marginTop="30dp"
+        android:id="@+id/address_edittxt_id"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/getCordinate_bttn_id" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/cordinate_linearLayout_id">
+
+
+        <EditText
+            android:layout_height="50dp"
+            android:ems="10"
+            android:id="@+id/cordinate_edittxt_id"
+            android:layout_below="@+id/address_edittxt_id"
+            android:layout_alignStart="@+id/address_edittxt_id"
+            android:layout_marginTop="22dp"
+            android:hint="coordinate"
+            android:layout_width="200dp" />
+
+
+        <Button
+            android:text="get Cordinate"
+            android:layout_height="50dp"
+            android:id="@+id/getCordinate_bttn_id"
+            android:layout_alignBottom="@+id/save_bttn_id"
+            android:layout_alignEnd="@+id/save_bttn_id"
+            android:layout_marginBottom="37dp"
+            android:layout_width="150dp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:text="save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="42dp"
+        android:id="@+id/save_bttn_id"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1" />
+
+
+</LinearLayout>
