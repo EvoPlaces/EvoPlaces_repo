@@ -13,12 +13,11 @@
     tools:context="yqr.ghonche.evoplaces.MainActivity1">
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="name"
         android:ems="10"
-        android:layout_marginLeft="51dp"
         android:id="@+id/name_edittxt_id"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -91,16 +90,67 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:text="suitable for Family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/suitable_for_familiy"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:text="suitable for groups"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/suitable_for_groups"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:text="suitable for Dates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/suitable_for_dates"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:text="suitable for Working"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/suitable_for_working"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
     <Button
         android:text="save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="121dp"
+        android:layout_height="38dp"
         android:layout_marginRight="42dp"
         android:id="@+id/save_bttn_id"
         android:layout_marginEnd="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_weight="1" />
+        android:layout_alignParentEnd="true" />
 
 
 </LinearLayout>

@@ -10,14 +10,25 @@ public class Yelp {
     private String category;
     private String address;
     private String coordinate;
+    private int suitableFor;
 
-    public Yelp(String name, String phone, byte[] picture, String category, String address, String coordinate){
+    public int getSuitableFor() {
+        return suitableFor;
+    }
+
+    public void setSuitableFor(int suitableFor) {
+        this.suitableFor = suitableFor;
+    }
+
+    public Yelp(String name, String phone, byte[] picture, String category, String address, String coordinate , int suitableFor){
         this.name = name;
         this.phone = phone;
         this.picture = picture;
         this.category = category;
         this.address = address;
         this.coordinate = coordinate;
+        this.suitableFor = suitableFor;
+
     }
 
     //Name

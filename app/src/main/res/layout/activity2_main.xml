@@ -17,7 +17,7 @@
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/logoimage" />
+        app:srcCompat="@drawable/galleryicon2" />
 
     <Button
         android:text="Next"

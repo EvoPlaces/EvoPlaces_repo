@@ -18,6 +18,7 @@ public class DataBaseSchema {
             public static final String CAT     =  "category";
             public static final String ADDRESS =  "address";
             public static final String CRD     =  "coordinate";
+            public static final String SUIT    = "suitable for";
         }
     }
 }

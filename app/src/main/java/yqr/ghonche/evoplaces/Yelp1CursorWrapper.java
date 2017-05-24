@@ -26,7 +26,7 @@ public class Yelp1CursorWrapper extends CursorWrapper {
         String address = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.ADDRESS));
         String coordinate = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CRD));
 
-        Yelp current = new Yelp(name, phone, picture, category, address, coordinate);
+        Yelp current = new Yelp(name, phone, picture, category, address, coordinate , 0);
         return current;
     }
 
@@ -47,6 +47,7 @@ public class Yelp1CursorWrapper extends CursorWrapper {
         data.putString(DataBaseSchema.Yelp1.culs.CAT , category);
         data.putString(DataBaseSchema.Yelp1.culs.CRD , coordinate);
         data.putByteArray(DataBaseSchema.Yelp1.culs.PIC , picture);
+        data.putInt(DataBaseSchema.Yelp1.culs.SUIT , 0);
 
         return data ;
     }

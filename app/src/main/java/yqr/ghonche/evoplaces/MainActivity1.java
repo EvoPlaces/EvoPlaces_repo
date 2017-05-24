@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 public class MainActivity1 extends AppCompatActivity {
+
 
     Button SaveBttn;
     Button GetCordinateBttn;
@@ -17,8 +20,12 @@ public class MainActivity1 extends AppCompatActivity {
     EditText address_Edittxt;
     public static EditText Cordinate_Edittxt;
     LocationServiceManager locationServiceManager;
+    CheckBox family_chk;
+    CheckBox date_chk;
+    CheckBox working_chk;
+    CheckBox group_chk;
 
-    private int progressValue = 0;
+//    private int progressValue = 0;
     public static DataBaseManager dataBaseManager;
 
 
@@ -26,6 +33,11 @@ public class MainActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        date_chk = (CheckBox) findViewById(R.id.suitable_for_dates);
+        family_chk = (CheckBox) findViewById(R.id.suitable_for_familiy);
+        group_chk = (CheckBox) findViewById(R.id.suitable_for_groups);
+        working_chk = (CheckBox) findViewById(R.id.suitable_for_working);
 
         name_Edittxt = (EditText) findViewById(R.id.name_edittxt_id);
         phone_Editxt = (EditText) findViewById(R.id.phone_edittxt_id);
@@ -44,12 +56,14 @@ public class MainActivity1 extends AppCompatActivity {
 
                 if (name_Edittxt.getText().toString().equals("") ||
                         address_Edittxt.getText().toString().equals("") ||
-                        category_Edittxt.getText().toString().equals("")) {
+                        category_Edittxt.getText().toString().equals("") ||
+                phone_Editxt.getText().toString().equals("")) {
 
 
                     Toast.makeText(MainActivity1.this, "fields can not be empty", Toast.LENGTH_LONG).show();
 
                 } else {
+
 
                     Yelp yelp = new Yelp
                             (name_Edittxt.getText().toString(),
@@ -57,7 +71,7 @@ public class MainActivity1 extends AppCompatActivity {
                                     DbBitmapUtility.getBytes(MainActivity2.image),
                                     category_Edittxt.getText().toString(),
                                     address_Edittxt.getText().toString(),
-                                    " ");
+                                    " ", 0);
                     dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
                     ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
