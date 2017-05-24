@@ -24,7 +24,7 @@ import com.vansuita.pickimage.listeners.IPickResult;
 
 public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
-    private ImageView imageView=null;
+    public static ImageView imageView=null;
     private Button next_bttn;
     private Button Yes_clearDB_dialog_bttn;
     private Button No_clearDB_dialog_bttn;
@@ -41,6 +41,7 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
         setContentView(R.layout.activity2_main);
 
         imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.galleryicon2);
         next_bttn = (Button) findViewById(R.id.button);
 
 

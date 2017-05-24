@@ -14,12 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/yes_clearDB_dialog_bttn_id"
-        android:text="YES!" />
+        android:text="YES!"
+        android:textColor="@color/green"/>
 
     <Button
         android:text="no!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/no_clearDB_dialog_bttn_id" />
+        android:id="@+id/no_clearDB_dialog_bttn_id"
+        android:textColor="@color/colorAccent"/>
 
 </LinearLayout>

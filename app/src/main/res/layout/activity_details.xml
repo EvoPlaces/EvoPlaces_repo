@@ -10,7 +10,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="yqr.ghonche.evoplaces.MainActivity1">
+    tools:context="yqr.ghonche.evoplaces.MainActivity1"
+    android:weightSum="1">
 
     <EditText
         android:layout_width="371dp"
@@ -57,12 +58,13 @@
         android:id="@+id/address_edittxt_id"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/getCordinate_bttn_id" />
+        android:layout_above="@+id/getCordinate_bttn_id"
+        android:layout_weight="0.37" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:id="@+id/cordinate_linearLayout_id">
 
@@ -71,32 +73,30 @@
             android:layout_height="50dp"
             android:ems="10"
             android:id="@+id/cordinate_edittxt_id"
-            android:layout_below="@+id/address_edittxt_id"
-            android:layout_alignStart="@+id/address_edittxt_id"
-            android:layout_marginTop="22dp"
             android:hint="coordinate"
-            android:layout_width="200dp" />
+            android:layout_width="150dp" />
 
 
         <Button
-            android:text="get Cordinate"
+            android:text="get Coordinate"
             android:layout_height="50dp"
             android:id="@+id/getCordinate_bttn_id"
             android:layout_alignBottom="@+id/save_bttn_id"
             android:layout_alignEnd="@+id/save_bttn_id"
-            android:layout_marginBottom="37dp"
-            android:layout_width="150dp" />
+            android:textColor="@color/colorAccent"
+            android:layout_width="160dp" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="87dp"
             android:orientation="vertical">
 
             <CheckBox
@@ -117,8 +117,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_height="87dp">
 
             <CheckBox
                 android:text="suitable for Dates"
@@ -143,14 +143,15 @@
     </LinearLayout>
 
     <Button
-        android:text="save"
-        android:layout_width="121dp"
-        android:layout_height="38dp"
+        android:text="Save this place to DB     "
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="42dp"
         android:id="@+id/save_bttn_id"
         android:layout_marginEnd="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/colorAccent"/>
 
 
 </LinearLayout>

@@ -1,6 +1,11 @@
 package yqr.ghonche.evoplaces;
 
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +13,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
+import rx.functions.Action1;
 
 
 public class MainActivity1 extends AppCompatActivity {
@@ -19,14 +31,14 @@ public class MainActivity1 extends AppCompatActivity {
     EditText phone_Editxt;
     EditText category_Edittxt;
     EditText address_Edittxt;
-    public static EditText Cordinate_Edittxt;
+    EditText Cordinate_Edittxt;
     LocationServiceManager locationServiceManager;
     CheckBox family_chk;
     CheckBox date_chk;
     CheckBox working_chk;
     CheckBox group_chk;
 
-//    private int progressValue = 0;
+    //    private int progressValue = 0;
     public static DataBaseManager dataBaseManager;
 
 
@@ -50,35 +62,35 @@ public class MainActivity1 extends AppCompatActivity {
         dataBaseManager = new DataBaseManager(MainActivity1.this);
         locationServiceManager = new LocationServiceManager(getApplicationContext(), MainActivity1.this);
 
+        dataBaseManager = new DataBaseManager(MainActivity1.this);
+
         SaveBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-
-
                 if (name_Edittxt.getText().toString().equals("") ||
                         address_Edittxt.getText().toString().equals("") ||
                         category_Edittxt.getText().toString().equals("") ||
-                phone_Editxt.getText().toString().equals("")) {
+                        phone_Editxt.getText().toString().equals("")) {
 
 
                     Toast.makeText(MainActivity1.this, "fields can not be empty", Toast.LENGTH_LONG).show();
 
                 } else {
-                    String suitableFor="";
+                    String suitableFor = "";
 
-                    if (family_chk.isChecked()){
-                        suitableFor=suitableFor.concat("1");
+                    if (family_chk.isChecked()) {
+                        suitableFor = suitableFor.concat("1");
                     }
-                    if (date_chk.isChecked()){
-                        suitableFor=suitableFor.concat("2");
+                    if (date_chk.isChecked()) {
+                        suitableFor = suitableFor.concat("2");
                     }
-                    if (working_chk.isChecked()){
-                        suitableFor=suitableFor.concat("3");
+                    if (working_chk.isChecked()) {
+                        suitableFor = suitableFor.concat("3");
                     }
-                    if (group_chk.isChecked()){
-                        suitableFor=suitableFor.concat("4");
+                    if (group_chk.isChecked()) {
+                        suitableFor = suitableFor.concat("4");
                     }
 
 
@@ -93,19 +105,23 @@ public class MainActivity1 extends AppCompatActivity {
 
                     dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
-                    Log.d("DB log","name:   "+name_Edittxt.getText().toString()+"phone:   "+
-                            phone_Editxt.getText().toString()+"image:  "+
-                            DbBitmapUtility.getBytes(MainActivity2.image)+"category:   "+
-                            category_Edittxt.getText().toString()+"address:   "+
-                            address_Edittxt.getText().toString()+" coordinate:  "+
-                            Cordinate_Edittxt.getText().toString()+"suitable for:   "+
+                    Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
+                            phone_Editxt.getText().toString() + "image:  " +
+                            DbBitmapUtility.getBytes(MainActivity2.image) + "category:   " +
+                            category_Edittxt.getText().toString() + "address:   " +
+                            address_Edittxt.getText().toString() + " coordinate:  " +
+                            Cordinate_Edittxt.getText().toString() + "suitable for:   " +
                             Integer.parseInt(suitableFor));
-
-//                    Log.d("DB log2",DbBitmapUtility.getBytes(MainActivity2.image)+" ");
 
                     ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
+                    phone_Editxt.setText("");
 
+                    category_Edittxt.setText("");
+                    address_Edittxt.setText("");
+                    Cordinate_Edittxt.setText("");
+                    phone_Editxt.setText("");
+                    MainActivity2.imageView.setImageResource(R.drawable.galleryicon2);
                 }
 
             }
@@ -142,9 +158,7 @@ public class MainActivity1 extends AppCompatActivity {
 ////                        nowDoSomethingWith(location.getLatitude(), location.getLongitude());
 
 
-
                 //----------------------------------------TRY2--------------------------------------
-
 
 
 //                Intent intent=new Intent(MainActivity1.this, MapsActivity.class);
@@ -162,14 +176,57 @@ public class MainActivity1 extends AppCompatActivity {
                 //--------------------------------TRY3-----------------------------------------------
 
 
+                ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(getApplicationContext());
+
+                if (ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                locationProvider.getLastKnownLocation()
+                        .subscribe(new Action1<Location>() {
+                            @Override
+                            public void call(Location location) {
+
+                                ShowProgress.showProgress(MainActivity1.this,"getting GPS coordinates",10);
+
+                                Cordinate_Edittxt.setText(location.getLatitude()+" , "+location.getLongitude());
 
 
+                                Geocoder geocoder;
+                                List<Address> addresses = null;
+                                geocoder = new Geocoder(MainActivity1.this, Locale.getDefault());
 
+                                try {
+                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                                String city = addresses.get(0).getLocality();
+                                String state = addresses.get(0).getAdminArea();
+                                String country = addresses.get(0).getCountryName();
+                                String postalCode = addresses.get(0).getPostalCode();
+                                String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+                                String s = addresses.get(0).getCountryName()+" - "+
+                                        addresses.get(0).getAddressLine(0)+" - "+
+                                        addresses.get(0).getLocality()+" - "+
+                                        addresses.get(0).getFeatureName();
+
+                                Toast.makeText(MainActivity1.this, s , Toast.LENGTH_LONG
+                                       ).show();
+
+                            }
+                        });
             }
-
-
         });
-
 
 
 

@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/OK_senddata_dialog_bttn_id"
-        android:text="OK" />
+        android:text="OK"
+        android:textColor="@color/colorAccent"/>
 
 </LinearLayout>

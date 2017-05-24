@@ -104,7 +104,8 @@ public class LocationServiceManager extends Context implements android.location.
         if (permissionCheckresult != PackageManager.PERMISSION_GRANTED) {
             Log.i("Not Granted", "Not Granted");
             ActivityCompat.requestPermissions(appActivity,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     mRequestPermissionCode);
 
         } else {
@@ -113,8 +114,13 @@ public class LocationServiceManager extends Context implements android.location.
     }
 
     public void setLocationManager() {
-        mLocationManager = (LocationManager) applicationContext.getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        mLocationManager = (LocationManager) applicationContext.getSystemService
+                (Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -173,7 +179,7 @@ public class LocationServiceManager extends Context implements android.location.
 
     private void buildAlertMessageNoGpsDevice() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(appActivity);
-        builder.setMessage("GPS OFF")
+        builder.setMessage("turn GPS on?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
