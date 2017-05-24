@@ -80,52 +80,69 @@ public class MainActivity1 extends AppCompatActivity {
                 } else {
                     String suitableFor = "";
 
+                    boolean b = false;
                     if (family_chk.isChecked()) {
                         suitableFor = suitableFor.concat("1");
+                        b = true;
                     }
                     if (date_chk.isChecked()) {
                         suitableFor = suitableFor.concat("2");
+                        b = true;
                     }
                     if (working_chk.isChecked()) {
                         suitableFor = suitableFor.concat("3");
+                        b = true;
                     }
                     if (group_chk.isChecked()) {
                         suitableFor = suitableFor.concat("4");
+                        b = true;
                     }
 
 
-                    Yelp yelp = new Yelp
-                            (name_Edittxt.getText().toString(),
-                                    phone_Editxt.getText().toString(),
-                                    DbBitmapUtility.getBytes(MainActivity2.image),
-                                    category_Edittxt.getText().toString(),
-                                    address_Edittxt.getText().toString(),
-                                    Cordinate_Edittxt.getText().toString(),
-                                    Integer.parseInt(suitableFor));
+                    if (b) {
 
-                    dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
+                        Yelp yelp = new Yelp
+                                (name_Edittxt.getText().toString(),
+                                        phone_Editxt.getText().toString(),
+                                        DbBitmapUtility.getBytes(MainActivity2.image),
+                                        category_Edittxt.getText().toString(),
+                                        address_Edittxt.getText().toString(),
+                                        Cordinate_Edittxt.getText().toString(),
+                                        Integer.parseInt(suitableFor));
 
-                    Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
-                            phone_Editxt.getText().toString() + "image:  " +
-                            DbBitmapUtility.getBytes(MainActivity2.image) + "category:   " +
-                            category_Edittxt.getText().toString() + "address:   " +
-                            address_Edittxt.getText().toString() + " coordinate:  " +
-                            Cordinate_Edittxt.getText().toString() + "suitable for:   " +
-                            Integer.parseInt(suitableFor));
+                        dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
-                    ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
+                        Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
+                                phone_Editxt.getText().toString() + "image:  " +
+                                DbBitmapUtility.getBytes(MainActivity2.image) + "category:   " +
+                                category_Edittxt.getText().toString() + "address:   " +
+                                address_Edittxt.getText().toString() + " coordinate:  " +
+                                Cordinate_Edittxt.getText().toString() + "suitable for:   " +
+                                Integer.parseInt(suitableFor));
 
-                    phone_Editxt.setText("");
+                        ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
-                    category_Edittxt.setText("");
-                    address_Edittxt.setText("");
-                    Cordinate_Edittxt.setText("");
-                    phone_Editxt.setText("");
-                    MainActivity2.imageView.setImageResource(R.drawable.galleryicon2);
+                        phone_Editxt.setText("");
+                        name_Edittxt.setText("");
+                        category_Edittxt.setText("");
+                        address_Edittxt.setText("");
+                        Cordinate_Edittxt.setText("");
+                        phone_Editxt.setText("");
+                        MainActivity2.imageView.setImageResource(R.drawable.galleryicon2);
+
+                        Toast.makeText(MainActivity1.this, "this place saved", Toast.LENGTH_LONG).show();
+
+                    }
+                    else {
+                        Toast.makeText(MainActivity1.this, "check at least one checkbox", Toast.LENGTH_LONG).show();
+                    }
                 }
+
+
 
             }
         });
+
 
 
         GetCordinateBttn.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +210,7 @@ public class MainActivity1 extends AppCompatActivity {
                             @Override
                             public void call(Location location) {
 
-                                ShowProgress.showProgress(MainActivity1.this,"getting GPS coordinates",10);
+                                ShowProgress.showProgress(MainActivity1.this,"getting GPS coordinates",20);
 
                                 Cordinate_Edittxt.setText(location.getLatitude()+" , "+location.getLongitude());
 
