@@ -20,7 +20,8 @@ public class Yelp {
         this.suitableFor = suitableFor;
     }
 
-    public Yelp(String name, String phone, byte[] picture, String category, String address, String coordinate , int suitableFor){
+    public Yelp(String name, String phone, byte[] picture, String category,
+                String address, String coordinate , int suitableFor){
         this.name = name;
         this.phone = phone;
         this.picture = picture;

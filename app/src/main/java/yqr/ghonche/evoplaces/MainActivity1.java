@@ -54,6 +54,8 @@ public class MainActivity1 extends AppCompatActivity {
             public void onClick(View v) {
 
 
+
+
                 if (name_Edittxt.getText().toString().equals("") ||
                         address_Edittxt.getText().toString().equals("") ||
                         category_Edittxt.getText().toString().equals("") ||
@@ -63,6 +65,20 @@ public class MainActivity1 extends AppCompatActivity {
                     Toast.makeText(MainActivity1.this, "fields can not be empty", Toast.LENGTH_LONG).show();
 
                 } else {
+                    String suitableFor="";
+
+                    if (family_chk.isChecked()){
+                        suitableFor=suitableFor.concat("1");
+                    }
+                    if (date_chk.isChecked()){
+                        suitableFor=suitableFor.concat("2");
+                    }
+                    if (working_chk.isChecked()){
+                        suitableFor=suitableFor.concat("3");
+                    }
+                    if (group_chk.isChecked()){
+                        suitableFor=suitableFor.concat("4");
+                    }
 
 
                     Yelp yelp = new Yelp
@@ -71,7 +87,9 @@ public class MainActivity1 extends AppCompatActivity {
                                     DbBitmapUtility.getBytes(MainActivity2.image),
                                     category_Edittxt.getText().toString(),
                                     address_Edittxt.getText().toString(),
-                                    " ", 0);
+                                    Cordinate_Edittxt.getText().toString(),
+                                    Integer.parseInt(suitableFor));
+
                     dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
                     ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
