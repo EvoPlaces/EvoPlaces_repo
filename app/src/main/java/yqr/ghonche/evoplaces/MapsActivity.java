@@ -1,13 +1,13 @@
 package yqr.ghonche.evoplaces;
 
 
-import android.*;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -51,24 +51,10 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         locationServiceManager = new LocationServiceManager(getApplicationContext(), MapsActivity.this);
-        EvoPlacesMap = new GoogleMap();
+//        EvoPlacesMap = new GoogleMap();
 
         getCoordinate = (ImageButton) findViewById(R.id.getCordinate_imgbttn_map_id);
-        getCoordinate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                LatLng currentLatLng =
-                        new LatLng(locationServiceManager.getlatitude(),
-                                locationServiceManager.getlongtitude());
-
-                EvoPlacesMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-
-                CurrentCoordinate = currentLatLng + "";
-
-                MainActivity1.Cordinate_Edittxt.setText(CurrentCoordinate);
-            }
-        });
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -76,11 +62,11 @@ public class MapsActivity extends FragmentActivity implements
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
 
-    @Override
-    public void onBackPressed() {
-
-//        this.finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+////        this.finish();
+//    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -97,6 +83,26 @@ public class MapsActivity extends FragmentActivity implements
         }
 
 
+
+        getCoordinate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LatLng currentLatLng =
+                        new LatLng(locationServiceManager.getlatitude(),
+                                locationServiceManager.getlongtitude());
+
+                EvoPlacesMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+
+                Log.d("latlng", "lat= "+EvoPlacesMap.getMyLocation().getLatitude()+" lng= "
+                        +EvoPlacesMap.getMyLocation().getLongitude());
+
+
+                CurrentCoordinate = currentLatLng + "";
+
+                MainActivity1.Cordinate_Edittxt.setText(CurrentCoordinate);
+            }
+        });
 
 
     } //onMapReady

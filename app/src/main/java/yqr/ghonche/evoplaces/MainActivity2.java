@@ -174,10 +174,11 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
                     @Override
                     public void onClick(View view) {
 
-                        if(ip_sendData_dialog_edittxt.getText().toString().equals("")||
-                                port_sendData_dialog_edittxt.getText().toString().equals("")) {
+                        if(ip_sendData_dialog_edittxt.getText().toString().equals(null)||
+                                port_sendData_dialog_edittxt.getText().toString().equals(null)) {
 
-                            Animation anim = AnimationUtils.loadAnimation(MainActivity2.this, R.anim.animation);
+                            Animation anim = AnimationUtils.loadAnimation(MainActivity2.this,
+                                    R.anim.animation);
                             ip_sendData_dialog_edittxt.setText("");
                             port_sendData_dialog_edittxt.startAnimation(anim);
                             Vibrator v = (Vibrator) getApplicationContext().getSystemService

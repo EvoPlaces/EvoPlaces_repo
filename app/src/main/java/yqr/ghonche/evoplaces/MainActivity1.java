@@ -1,5 +1,5 @@
 package yqr.ghonche.evoplaces;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,7 +18,7 @@ public class MainActivity1 extends AppCompatActivity {
     public static EditText Cordinate_Edittxt;
     LocationServiceManager locationServiceManager;
 
-    private int progressValue=0;
+    private int progressValue = 0;
     public static DataBaseManager dataBaseManager;
 
 
@@ -31,29 +31,27 @@ public class MainActivity1 extends AppCompatActivity {
         phone_Editxt = (EditText) findViewById(R.id.phone_edittxt_id);
         category_Edittxt = (EditText) findViewById(R.id.category_edittxt_id);
         address_Edittxt = (EditText) findViewById(R.id.address_edittxt_id);
-         Cordinate_Edittxt = (EditText) findViewById(R.id.cordinate_edittxt_id);
+        Cordinate_Edittxt = (EditText) findViewById(R.id.cordinate_edittxt_id);
         SaveBttn = (Button) findViewById(R.id.save_bttn_id);
         GetCordinateBttn = (Button) findViewById(R.id.getCordinate_bttn_id);
         dataBaseManager = new DataBaseManager(MainActivity1.this);
-        locationServiceManager=new LocationServiceManager(getApplicationContext(),MainActivity1.this);
+        locationServiceManager = new LocationServiceManager(getApplicationContext(), MainActivity1.this);
 
         SaveBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                if(name_Edittxt.getText().toString().equals("")||
+                if (name_Edittxt.getText().toString().equals("") ||
                         address_Edittxt.getText().toString().equals("") ||
-                category_Edittxt.getText().toString().equals("")) {
+                        category_Edittxt.getText().toString().equals("")) {
 
 
-                    Toast.makeText(MainActivity1.this, "fields can not be empty" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity1.this, "fields can not be empty", Toast.LENGTH_LONG).show();
 
-                }
+                } else {
 
-                else {
-
-                    Yelp yelp=new Yelp
+                    Yelp yelp = new Yelp
                             (name_Edittxt.getText().toString(),
                                     phone_Editxt.getText().toString(),
                                     DbBitmapUtility.getBytes(MainActivity2.image),
@@ -62,7 +60,7 @@ public class MainActivity1 extends AppCompatActivity {
                                     " ");
                     dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
-                    ShowProgress.showProgress(MainActivity1.this,"sending data to database...",10);
+                    ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
 
                 }
@@ -75,12 +73,41 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(MainActivity1.this, MapsActivity.class);
+                //----------------------------------------------TRY1------------------------------------
+//                    // instantiate the location manager, note you will need to request permissions in your manifest
+//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                    // get the last know location from your location manager.
+//                    if (ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                            != PackageManager.PERMISSION_GRANTED &&
+//                            ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+//                                    != PackageManager.PERMISSION_GRANTED) {
+//                        // TODO: Consider calling
+//                        //    ActivityCompat#requestPermissions
+//                        // here to request the missing permissions, and then overriding
+//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                        //                                          int[] grantResults)
+//                        // to handle the case where the user grants the permission. See the documentation
+//                        // for ActivityCompat#requestPermissions for more details.
+//                        return;
+//                    }
+//
+//                    Location location = locationManager.
+//                            getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                        // now get the lat/lon from the location and do something with it.4
+//                    Toast.makeText(MainActivity1.this,
+//                            location.getLatitude()+"    ___  "+location.getLongitude(), Toast.LENGTH_LONG);
+////                        nowDoSomethingWith(location.getLatitude(), location.getLongitude());
 
-                startActivity(intent);
 
 
-//                ShowProgress.showProgress(MainActivity1.this, "getting coordinates" , 20);
+                //----------------------------------------TRY2--------------------------------------
+
+
+
+//                Intent intent=new Intent(MainActivity1.this, MapsActivity.class);
+//
+//                startActivity(intent);
+
 //
 //                LatLng currentLatLng =
 //                        new LatLng(locationServiceManager.getlatitude(),
@@ -88,7 +115,16 @@ public class MainActivity1 extends AppCompatActivity {
 //
 //                Cordinate_Edittxt.setText(currentLatLng+" ");
 
+
+                //--------------------------------TRY3-----------------------------------------------
+
+
+
+
+
             }
+
+
         });
 
 
