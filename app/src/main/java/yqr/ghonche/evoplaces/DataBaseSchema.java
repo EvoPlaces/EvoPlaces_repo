@@ -7,6 +7,7 @@ package yqr.ghonche.evoplaces;
 public class DataBaseSchema {
 
     //table just for evoteam members
+
     public static final class Yelp1{
 
         public static final String NAME = "local_DataBase";

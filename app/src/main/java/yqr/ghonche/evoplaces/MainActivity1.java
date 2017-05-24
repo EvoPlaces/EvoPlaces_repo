@@ -2,6 +2,7 @@ package yqr.ghonche.evoplaces;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -91,6 +92,16 @@ public class MainActivity1 extends AppCompatActivity {
                                     Integer.parseInt(suitableFor));
 
                     dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
+
+                    Log.d("DB log","name:   "+name_Edittxt.getText().toString()+"phone:   "+
+                            phone_Editxt.getText().toString()+"image:  "+
+                            DbBitmapUtility.getBytes(MainActivity2.image)+"category:   "+
+                            category_Edittxt.getText().toString()+"address:   "+
+                            address_Edittxt.getText().toString()+" coordinate:  "+
+                            Cordinate_Edittxt.getText().toString()+"suitable for:   "+
+                            Integer.parseInt(suitableFor));
+
+//                    Log.d("DB log2",DbBitmapUtility.getBytes(MainActivity2.image)+" ");
 
                     ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 

@@ -39,6 +39,7 @@ public class DataBaseManager {
         values.put(DataBaseSchema.Yelp1.culs.CAT, ylp.getCategory());
         values.put(DataBaseSchema.Yelp1.culs.ADDRESS, ylp.getAddress());
         values.put(DataBaseSchema.Yelp1.culs.CRD, ylp.getCoordinate());
+        values.put(DataBaseSchema.Yelp1.culs.SUIT, ylp.getSuitableFor());
 
 
         return values;
@@ -91,7 +92,9 @@ public class DataBaseManager {
                     "Address"   , bundle.get(DataBaseSchema.Yelp1.culs.ADDRESS),
                     "Coordinate"     , bundle.get(DataBaseSchema.Yelp1.culs.CRD),
                     "category" , bundle.get(DataBaseSchema.Yelp1.culs.CAT),
-                    "Picture"    ,bundle.get(DataBaseSchema.Yelp1.culs.PIC))
+                    "Picture"    ,bundle.get(DataBaseSchema.Yelp1.culs.PIC),
+                    "SuitableFor"    ,bundle.get(DataBaseSchema.Yelp1.culs.SUIT)
+                    )
             );
 
         } finally {

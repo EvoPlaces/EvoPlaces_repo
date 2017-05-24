@@ -26,7 +26,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DataBaseSchema.Yelp1.culs.PIC + ", " +
                 DataBaseSchema.Yelp1.culs.CAT + ", " +
                 DataBaseSchema.Yelp1.culs.ADDRESS + ", " +
-                DataBaseSchema.Yelp1.culs.CRD +
+                DataBaseSchema.Yelp1.culs.CRD + ", " +
+                DataBaseSchema.Yelp1.culs.SUIT +
                 ")"
         );
     }
