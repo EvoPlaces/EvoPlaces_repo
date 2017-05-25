@@ -1,12 +1,21 @@
 package yqr.ghonche.evoplaces;
 
+
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Vibrator;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +27,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.vansuita.pickimage.bean.PickResult;
-import com.vansuita.pickimage.bundle.PickSetup;
-import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
@@ -34,11 +47,19 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
     private EditText port_sendData_dialog_edittxt;
 
 
+    //DataBase Manager
+    DataBaseManager dbManager;
+
     public static Bitmap image;
+    private String userChoosenTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2_main);
+
+        //DataBaseManager
+        dbManager = new DataBaseManager(this);
 
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.galleryicon2);
@@ -49,27 +70,29 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
             @Override
             public void onClick(View v) {
 
-                PickSetup pickSetup = new PickSetup();
-                pickSetup.setWidth(300).setHeight(300);
-                PickImageDialog.build(pickSetup)
-                        .setOnPickResult(new IPickResult() {
-                            @Override
-                            public void onPickResult(PickResult r) {
-                                //TODO: do what you have to...
+                selectImage();
 
-                                if (r.getError() == null) {
-                                    imageView.setImageBitmap(r.getBitmap());
-                                    image=r.getBitmap();
-
-                                    //or
-
-                                    imageView.setImageURI(r.getUri());
-                                } else {
-                                    //Handle possible errors
-                                    //TODO: do what you have to do with r.getError();
-                                }
-                            }
-                        }).show(getSupportFragmentManager());
+//                PickSetup pickSetup = new PickSetup();
+//                pickSetup.setWidth(300).setHeight(300);
+//                PickImageDialog.build(pickSetup)
+//                        .setOnPickResult(new IPickResult() {
+//                            @Override
+//                            public void onPickResult(PickResult r) {
+//
+//
+//                                if (r.getError() == null) {
+//                                    imageView.setImageBitmap(r.getBitmap());
+//                                    image=r.getBitmap();
+//
+//                                    //or
+//
+//                                    imageView.setImageURI(r.getUri());
+//                                } else {
+//                                    //Handle possible errors
+//
+//                                }
+//                            }
+//                        }).show(getSupportFragmentManager());
             }
         });
 
@@ -87,6 +110,7 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
                 }
 
                 else {
+
                     Intent intent=new Intent(MainActivity2.this,MainActivity1.class);
                     startActivity(intent);
                 }
@@ -97,6 +121,97 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
         });
 
 }// onCreate
+    //---------------
+
+    private void selectImage() {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result=Utility.checkPermission(MainActivity2.this);
+                if (items[item].equals("Take Photo")) {
+                    userChoosenTask="Take Photo";
+                    if(result)
+                        cameraIntent();
+                } else if (items[item].equals("Choose from Library")) {
+                    userChoosenTask="Choose from Library";
+                    if(result)
+                        galleryIntent();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void cameraIntent()
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+    }
+
+    private void galleryIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1)
+                onSelectFromGalleryResult(data);
+            else if (requestCode == 0)
+                onCaptureImageResult(data);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        image=bm;
+        imageView.setImageBitmap(bm);
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
+
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        image=thumbnail;
+        imageView.setImageBitmap(thumbnail);
+    }
+
+
+    //------------------
 
     @Override
     public void onPickResult(PickResult r) {
@@ -108,7 +223,7 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
 //            imageView.setImageURI(r.getUri());
 //        } else {
 //            //Handle possible errors
-//            //TODO: do what you have to do with r.getError();
+//
 //        }
 
 //        button.setOnClickListener(new View.OnClickListener() {
@@ -189,8 +304,9 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
                         }
 
                         else {
-
-                            //send data...
+                            String uri = "asd";
+                            myTask task = new myTask();
+                            task.execute(uri);
 
                         }
 
@@ -215,11 +331,12 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
                     @Override
                     public void onClick(View view) {
 
-                        MainActivity1.dataBaseManager.deleteAll();
+                        dbManager.deleteAll();
 
                         ShowProgress.showProgress(MainActivity2.this,"deleting database...",20);
 
                         clearDBdialog.dismiss();
+                        Log.d("*************", String.valueOf(dbManager.getDataBaseSize()));
 
                     }
                 });
@@ -252,5 +369,22 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
 
 
+    private class myTask extends AsyncTask<String, String, String>{
 
+        @Override
+        protected String doInBackground(String... params) {
+
+            String uri = params[0];
+            int result = dbManager.postDataHttpUrlConnection();
+            String line = "result is "+ result;
+
+            return line;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            next_bttn.setText(s);
+        }
+    }
 }//class

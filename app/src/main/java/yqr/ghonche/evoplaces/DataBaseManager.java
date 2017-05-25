@@ -4,8 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
+import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +23,9 @@ public class DataBaseManager {
 
     private Context mContext;
     private SQLiteDatabase mSQLiteDatabase;
+
+    HttpURLConnection urlConnection;
+    String uri = "http://192.168.202.1:3000/";
 
     public DataBaseManager(Context context){
         mContext = context.getApplicationContext();
@@ -75,40 +85,97 @@ public class DataBaseManager {
 
 
 
-    public String getDBrowinJson() {
-        String row = new String("\"[");
+//    public String getDBrowinJson() {
+//        String row = new String("\"[");
+//
+//        Yelp1CursorWrapper cursor = queryYelp1();
+//
+//        Bundle bundle ;
+//
+//        try {
+//            cursor.moveToFirst();
+//            bundle = cursor.getRowBundle();
+//
+//            row = row.concat(String.format( "{ \"%s\" : \"%s\" , \"%s\" : \"%s\" " +
+//                    ", \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
+//                    "Name", bundle.get(DataBaseSchema.Yelp1.culs.NAME),
+//                    "Address"   , bundle.get(DataBaseSchema.Yelp1.culs.ADDRESS),
+//                    "Coordinate"     , bundle.get(DataBaseSchema.Yelp1.culs.CRD),
+//                    "category" , bundle.get(DataBaseSchema.Yelp1.culs.CAT),
+//                    "Picture"    ,bundle.get(DataBaseSchema.Yelp1.culs.PIC),
+//                    "SuitableFor"    ,bundle.get(DataBaseSchema.Yelp1.culs.SUIT)
+//                    )
+//            );
+//
+//        } finally {
+//            cursor.close();
+//        }
+//        row = row.concat("]\"");
+//
+////        mDatabase.delete(driverStateTable.NAME ,
+//// cursor.getTaxiState().getString(Constant.DB_key_Longitude)
+//// + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
+//
+//        return row ;
+//    }
 
-        Yelp1CursorWrapper cursor = queryYelp1();
 
-        Bundle bundle ;
+    public  int postDataHttpUrlConnection() {
+        int k = 0;
+//        for (k = 0; k < this.getDataBaseSize() ; k++){//for loop
+            urlConnection=null;
+            try {
+                URL url = new URL(uri);
+                urlConnection = (HttpURLConnection) url.openConnection();
 
-        try {
-            cursor.moveToFirst();
-            bundle = cursor.getRowBundle();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setUseCaches(false);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
 
-            row = row.concat(String.format( "{ \"%s\" : \"%s\" , \"%s\" : \"%s\" " +
-                    ", \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-                    "Name", bundle.get(DataBaseSchema.Yelp1.culs.NAME),
-                    "Address"   , bundle.get(DataBaseSchema.Yelp1.culs.ADDRESS),
-                    "Coordinate"     , bundle.get(DataBaseSchema.Yelp1.culs.CRD),
-                    "category" , bundle.get(DataBaseSchema.Yelp1.culs.CAT),
-                    "Picture"    ,bundle.get(DataBaseSchema.Yelp1.culs.PIC),
-                    "SuitableFor"    ,bundle.get(DataBaseSchema.Yelp1.culs.SUIT)
-                    )
-            );
+                urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
 
-        } finally {
-            cursor.close();
-        }
-        row = row.concat("]\"");
+                urlConnection.connect();
+                urlConnection.setConnectTimeout(10000);
+                urlConnection.setReadTimeout(10000);
 
-//        mDatabase.delete(driverStateTable.NAME ,
-// cursor.getTaxiState().getString(Constant.DB_key_Longitude)
-// + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
+                //
+                //Create JSONObject here
+                //injash bayad khoonehaye database ro entesab bdid dg
+                //
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("ID", "25");
+                jsonParam.put("description", "Real");
+                jsonParam.put("enable", "true");
 
-        return row ;
+                DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+                wr.writeBytes(jsonParam.toString());
+                Log.d("********", jsonParam.toString());
+                wr.flush();
+                wr.close();
+
+
+                int HttpResult = urlConnection.getResponseCode();
+                Log.d("******************", String.valueOf(HttpResult));
+                return 1;
+
+//            }//for loop
+
+            }catch (IOException e) {
+                e.printStackTrace();
+                return 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            return 1;
+            } finally
+
+    {
+        if (urlConnection != null)
+            urlConnection.disconnect();
     }
 
 
+    }
 
 }

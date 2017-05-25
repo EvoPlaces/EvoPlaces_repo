@@ -38,8 +38,10 @@ public class MainActivity1 extends AppCompatActivity {
     CheckBox working_chk;
     CheckBox group_chk;
 
+    public static String Encodedimg;
+
     //    private int progressValue = 0;
-    public static DataBaseManager dataBaseManager;
+    public DataBaseManager dataBaseManager;
 
 
     @Override
@@ -104,21 +106,21 @@ public class MainActivity1 extends AppCompatActivity {
                         Yelp yelp = new Yelp
                                 (name_Edittxt.getText().toString(),
                                         phone_Editxt.getText().toString(),
-                                        DbBitmapUtility.getBytes(MainActivity2.image),
+                                        Encodedimg,
                                         category_Edittxt.getText().toString(),
                                         address_Edittxt.getText().toString(),
                                         Cordinate_Edittxt.getText().toString(),
-                                        Integer.parseInt(suitableFor));
+                                        suitableFor);
 
                         dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
-                        Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
-                                phone_Editxt.getText().toString() + "image:  " +
-                                DbBitmapUtility.getBytes(MainActivity2.image) + "category:   " +
-                                category_Edittxt.getText().toString() + "address:   " +
-                                address_Edittxt.getText().toString() + " coordinate:  " +
-                                Cordinate_Edittxt.getText().toString() + "suitable for:   " +
-                                Integer.parseInt(suitableFor));
+//                        Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
+//                                phone_Editxt.getText().toString() + "image:  " +
+//                                DbBitmapUtility.getBytes(MainActivity2.image) + "category:   " +
+//                                category_Edittxt.getText().toString() + "address:   " +
+//                                address_Edittxt.getText().toString() + " coordinate:  " +
+//                                Cordinate_Edittxt.getText().toString() + "suitable for:   " +
+//                                Integer.parseInt(suitableFor));
 
                         ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
@@ -129,6 +131,8 @@ public class MainActivity1 extends AppCompatActivity {
                         Cordinate_Edittxt.setText("");
                         phone_Editxt.setText("");
                         MainActivity2.imageView.setImageResource(R.drawable.galleryicon2);
+
+                        Log.d("*****************", String.valueOf(dataBaseManager.getDataBaseSize()));
 
                         Toast.makeText(MainActivity1.this, "this place saved", Toast.LENGTH_LONG).show();
 

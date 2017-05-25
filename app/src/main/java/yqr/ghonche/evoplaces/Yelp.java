@@ -6,22 +6,14 @@ package yqr.ghonche.evoplaces;
 public class Yelp {
     private String name;
     private String phone;
-    private byte [] picture;
+    private String picture;
     private String category;
     private String address;
     private String coordinate;
-    private int suitableFor;
+    private String suitableFor;
 
-    public int getSuitableFor() {
-        return suitableFor;
-    }
-
-    public void setSuitableFor(int suitableFor) {
-        this.suitableFor = suitableFor;
-    }
-
-    public Yelp(String name, String phone, byte[] picture, String category,
-                String address, String coordinate , int suitableFor){
+    public Yelp(String name, String phone, String picture, String category,
+                String address, String coordinate , String suitableFor){
         this.name = name;
         this.phone = phone;
         this.picture = picture;
@@ -30,6 +22,15 @@ public class Yelp {
         this.coordinate = coordinate;
         this.suitableFor = suitableFor;
 
+    }
+
+    //suitableFor
+    public String getSuitableFor() {
+        return suitableFor;
+    }
+
+    public void setSuitableFor(String suitableFor) {
+        this.suitableFor = suitableFor;
     }
 
     //Name
@@ -51,11 +52,11 @@ public class Yelp {
     }
 
     //Picture
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte [] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
