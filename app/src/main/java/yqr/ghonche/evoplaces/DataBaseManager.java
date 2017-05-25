@@ -157,7 +157,7 @@ public class DataBaseManager {
 
 
                 int HttpResult = urlConnection.getResponseCode();
-                Log.d("******************", String.valueOf(HttpResult));
+                Log.d("****************", String.valueOf(HttpResult));
                 return 1;
 
 //            }//for loop
