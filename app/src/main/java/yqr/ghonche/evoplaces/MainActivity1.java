@@ -153,6 +153,14 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                ActivityCompat.requestPermissions(MainActivity1.this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+
+                ActivityCompat.requestPermissions(MainActivity1.this,
+                        new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                        1);
+
                 //----------------------------------------------TRY1------------------------------------
 //                    // instantiate the location manager, note you will need to request permissions in your manifest
 //                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

@@ -168,14 +168,10 @@ public class DataBaseManager {
             } catch (JSONException e) {
                 e.printStackTrace();
             return 1;
-            } finally
-
-    {
+            } finally {
         if (urlConnection != null)
             urlConnection.disconnect();
-    }
-
-
+            }
     }
 
 }

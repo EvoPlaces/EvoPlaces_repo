@@ -6,12 +6,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -65,34 +67,21 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
         imageView.setImageResource(R.drawable.galleryicon2);
         next_bttn = (Button) findViewById(R.id.button);
 
+        ActivityCompat.requestPermissions(MainActivity2.this,
+                new String[]{android.Manifest.permission.CAMERA},
+                1);
+
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivityCompat.requestPermissions(MainActivity2.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+
 
                 selectImage();
-
-//                PickSetup pickSetup = new PickSetup();
-//                pickSetup.setWidth(300).setHeight(300);
-//                PickImageDialog.build(pickSetup)
-//                        .setOnPickResult(new IPickResult() {
-//                            @Override
-//                            public void onPickResult(PickResult r) {
-//
-//
-//                                if (r.getError() == null) {
-//                                    imageView.setImageBitmap(r.getBitmap());
-//                                    image=r.getBitmap();
-//
-//                                    //or
-//
-//                                    imageView.setImageURI(r.getUri());
-//                                } else {
-//                                    //Handle possible errors
-//
-//                                }
-//                            }
-//                        }).show(getSupportFragmentManager());
             }
         });
 
@@ -133,6 +122,12 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
             public void onClick(DialogInterface dialog, int item) {
                 boolean result=Utility.checkPermission(MainActivity2.this);
                 if (items[item].equals("Take Photo")) {
+
+                    ActivityCompat.requestPermissions(MainActivity2.this,
+                            new String[]{android.Manifest.permission.CAMERA},
+                            1);
+
+
                     userChoosenTask="Take Photo";
                     if(result)
                         cameraIntent();
@@ -215,53 +210,9 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
     @Override
     public void onPickResult(PickResult r) {
-//        if (r.getError() == null) {
-//            imageView.setImageBitmap(r.getBitmap());
-//
-//            //or
-//
-//            imageView.setImageURI(r.getUri());
-//        } else {
-//            //Handle possible errors
-//
-//        }
-
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                final List<Intent> cameraIntents = new ArrayList<Intent>();
-//                final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                final PackageManager packageManager = getPackageManager();
-//                final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-//                for(ResolveInfo res : listCam) {
-//                    final String packageName = res.activityInfo.packageName;
-//                    final Intent intent = new Intent(captureIntent);
-//                    intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-//                    intent.setPackage(packageName);
-//                    intent.putExtra(MediaStore.MEDIA_IGNORE_FILENAME, ".nomedia");
-//
-//                    cameraIntents.add(intent);
-//
-//                }
-//
-//                // Filesystem.
-//                final Intent galleryIntent = new Intent();
-//                galleryIntent.setType("image/*");
-//                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-//
-//                // Chooser of filesystem options.
-//                final Intent chooserIntent = Intent.createChooser(galleryIntent,
-//                        "take a photo");
-//
-//                // Add the camera options.
-//                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-//                        cameraIntents.toArray(new Parcelable[]{}));
-//                startActivityForResult(chooserIntent, 1);
-//
-//            }
-//        });
     }//onpickresult
+
+
 
 
     @Override
@@ -387,4 +338,35 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
             next_bttn.setText(s);
         }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(MainActivity2.this,
+                            "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+
+
 }//class
