@@ -6,13 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -24,16 +23,13 @@ public class DataBaseManager {
     private Context mContext;
     private SQLiteDatabase mSQLiteDatabase;
 
-    HttpURLConnection urlConnection;
-    String uri = "http://192.168.202.1:3000/";
-
-    public DataBaseManager(Context context){
+    public DataBaseManager(Context context) {
         mContext = context.getApplicationContext();
         mSQLiteDatabase = new DataBaseHelper(mContext).getWritableDatabase();
     }
 
     //adding a yelp to the local DataBase
-    public void add_to_yelp_firstProject_DataBase(Yelp ylp){
+    public void add_to_yelp_firstProject_DataBase(Yelp ylp) {
         ContentValues values = getYelpValues(ylp);
         Yelp1CursorWrapper cursor = queryYelp1();
 
@@ -48,7 +44,8 @@ public class DataBaseManager {
         values.put(DataBaseSchema.Yelp1.culs.PIC, ylp.getPicture());
         values.put(DataBaseSchema.Yelp1.culs.CAT, ylp.getCategory());
         values.put(DataBaseSchema.Yelp1.culs.ADDRESS, ylp.getAddress());
-        values.put(DataBaseSchema.Yelp1.culs.CRD, ylp.getCoordinate());
+        values.put(DataBaseSchema.Yelp1.culs.CRD_LNG, ylp.getCoordinate_lng());
+        values.put(DataBaseSchema.Yelp1.culs.CRD_LAT, ylp.getCoordinate_lat());
         values.put(DataBaseSchema.Yelp1.culs.SUIT, ylp.getSuitableFor());
 
 
@@ -57,18 +54,18 @@ public class DataBaseManager {
 
     private Yelp1CursorWrapper queryYelp1() {
         Cursor cursor = mSQLiteDatabase.query(DataBaseSchema.Yelp1.NAME
-        , null, null, null, null, null, null);
+                , null, null, null, null, null, null);
         return new Yelp1CursorWrapper(cursor);
     }
 
     //number of rows in the local DataBase
-    public int getDataBaseSize(){
+    public int getDataBaseSize() {
         ArrayList<Yelp> yelps = new ArrayList<>();
         Yelp1CursorWrapper cursor = queryYelp1();
 
         cursor.moveToFirst();
 
-        while(! cursor.isAfterLast()){
+        while (!cursor.isAfterLast()) {
             Yelp ylp = cursor.getYelp1();
             yelps.add(ylp);
             cursor.moveToNext();
@@ -78,100 +75,81 @@ public class DataBaseManager {
 
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         mSQLiteDatabase.delete(DataBaseSchema.Yelp1.NAME, null, null);
     }
 
 
+    public int postDataHttpUrlConnection() {
+
+        Yelp1CursorWrapper cursor = queryYelp1();
 
 
-//    public String getDBrowinJson() {
-//        String row = new String("\"[");
-//
-//        Yelp1CursorWrapper cursor = queryYelp1();
-//
-//        Bundle bundle ;
-//
-//        try {
-//            cursor.moveToFirst();
-//            bundle = cursor.getRowBundle();
-//
-//            row = row.concat(String.format( "{ \"%s\" : \"%s\" , \"%s\" : \"%s\" " +
-//                    ", \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-//                    "Name", bundle.get(DataBaseSchema.Yelp1.culs.NAME),
-//                    "Address"   , bundle.get(DataBaseSchema.Yelp1.culs.ADDRESS),
-//                    "Coordinate"     , bundle.get(DataBaseSchema.Yelp1.culs.CRD),
-//                    "category" , bundle.get(DataBaseSchema.Yelp1.culs.CAT),
-//                    "Picture"    ,bundle.get(DataBaseSchema.Yelp1.culs.PIC),
-//                    "SuitableFor"    ,bundle.get(DataBaseSchema.Yelp1.culs.SUIT)
-//                    )
-//            );
-//
-//        } finally {
-//            cursor.close();
-//        }
-//        row = row.concat("]\"");
-//
-////        mDatabase.delete(driverStateTable.NAME ,
-//// cursor.getTaxiState().getString(Constant.DB_key_Longitude)
-//// + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
-//
-//        return row ;
-//    }
 
+        try {
 
-    public  int postDataHttpUrlConnection() {
-        int k = 0;
-//        for (k = 0; k < this.getDataBaseSize() ; k++){//for loop
-            urlConnection=null;
-            try {
-                URL url = new URL(uri);
-                urlConnection = (HttpURLConnection) url.openConnection();
+            MainActivity2.urlConnection.setRequestMethod("POST");
+            MainActivity2.urlConnection.setDoOutput(true);
+            MainActivity2.urlConnection.setDoInput(true);
+            MainActivity2.urlConnection.setUseCaches(false);
+            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
 
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setDoOutput(true);
-                urlConnection.setDoInput(true);
-                urlConnection.setUseCaches(false);
-                urlConnection.setRequestProperty("Content-Type", "application/json");
+            MainActivity2.urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
 
-                urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
+            MainActivity2.urlConnection.connect();
+            MainActivity2.urlConnection.setConnectTimeout(10000);
+            MainActivity2.urlConnection.setReadTimeout(10000);
 
-                urlConnection.connect();
-                urlConnection.setConnectTimeout(10000);
-                urlConnection.setReadTimeout(10000);
+            /*
+            Create JSONObject here
+            */
+            cursor.moveToFirst();
 
-                //
-                //Create JSONObject here
-                //injash bayad khoonehaye database ro entesab bdid dg
-                //
+            int i = getDataBaseSize();
+            int j = 0;
+            JSONArray total = new JSONArray();
+            for(Yelp1CursorWrapper cursoR = cursor ; !cursoR.isAfterLast() ; cursoR.moveToNext()){
                 JSONObject jsonParam = new JSONObject();
-                jsonParam.put("ID", "25");
-                jsonParam.put("description", "Real");
-                jsonParam.put("enable", "true");
+                Yelp yelp = cursor.getYelp1();
 
-                DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-                wr.writeBytes(jsonParam.toString());
-                Log.d("********", jsonParam.toString());
-                wr.flush();
-                wr.close();
+                jsonParam.put("Name" , yelp.getName());
+                jsonParam.put("Description", yelp.getAddress());
+                jsonParam.put("x_coordinate", yelp.getCoordinate_lng());
+                jsonParam.put("y_coordinate", yelp.getCoordinate_lat());
+                jsonParam.put("subCategoryName", yelp.getSubCategory());
+                jsonParam.put("categoryName", yelp.getCategory());
+                jsonParam.put("phoneNumber", yelp.getPhone());
+                jsonParam.put("picAddress", yelp.getPicture());
 
+                total.put(jsonParam);
 
-                int HttpResult = urlConnection.getResponseCode();
-                Log.d("****************", String.valueOf(HttpResult));
-                return 1;
-
-//            }//for loop
-
-            }catch (IOException e) {
-                e.printStackTrace();
-                return 1;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            return 1;
-            } finally {
-        if (urlConnection != null)
-            urlConnection.disconnect();
+                j ++;
             }
+
+
+            DataOutputStream wr = new DataOutputStream(MainActivity2.urlConnection.getOutputStream());
+            wr.writeBytes(total.toString());
+            wr.flush();
+            wr.close();
+
+            int HttpResult = MainActivity2.urlConnection.getResponseCode();
+            Log.d("****************", String.valueOf(HttpResult));
+            return HttpResult;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 2;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 3;
+        } finally
+
+        {
+            if (MainActivity2.urlConnection != null)
+                MainActivity2.urlConnection.disconnect();
+        }
+
+
     }
 
 }

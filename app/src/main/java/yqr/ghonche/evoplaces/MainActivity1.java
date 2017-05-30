@@ -38,6 +38,9 @@ public class MainActivity1 extends AppCompatActivity {
     CheckBox working_chk;
     CheckBox group_chk;
 
+    String Coordinate_lng = "";
+    String Coordinate_lat = "";
+
     public static String Encodedimg;
 
     //    private int progressValue = 0;
@@ -108,11 +111,15 @@ public class MainActivity1 extends AppCompatActivity {
                                         phone_Editxt.getText().toString(),
                                         Encodedimg,
                                         category_Edittxt.getText().toString(),
+/*-------------------------        **   !!here is for sub category which will be added later!!   **   -------------------*/
+                                        "not yet for sub_category!",
                                         address_Edittxt.getText().toString(),
-                                        Cordinate_Edittxt.getText().toString(),
+                                        Coordinate_lng,
+                                        Coordinate_lat,
                                         suitableFor);
 
                         dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
+
 
 //                        Log.d("DB log", "name:   " + name_Edittxt.getText().toString() + "phone:   " +
 //                                phone_Editxt.getText().toString() + "image:  " +
@@ -134,6 +141,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                         Log.d("*****************", String.valueOf(dataBaseManager.getDataBaseSize()));
 
+                        Toast.makeText(MainActivity1.this, dataBaseManager.getDataBaseSize(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivity1.this, "this place saved", Toast.LENGTH_LONG).show();
 
                     }
@@ -226,6 +234,8 @@ public class MainActivity1 extends AppCompatActivity {
 
                                 Cordinate_Edittxt.setText(location.getLatitude()+" , "+location.getLongitude());
 
+                                Coordinate_lng = location.getLongitude() + "";
+                                Coordinate_lat = location.getLatitude() + "";
 
                                 Geocoder geocoder;
                                 List<Address> addresses = null;

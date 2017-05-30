@@ -8,18 +8,22 @@ public class Yelp {
     private String phone;
     private String picture;
     private String category;
+    private String subCategory;
     private String address;
-    private String coordinate;
+    private String coordinate_lat;
+    private String coordinate_lng;
     private String suitableFor;
 
-    public Yelp(String name, String phone, String picture, String category,
-                String address, String coordinate , String suitableFor){
+    public Yelp(String name, String phone, String picture, String category, String subCategory,
+                String address, String coordinate_lng, String coordinate_lat , String suitableFor){
         this.name = name;
         this.phone = phone;
         this.picture = picture;
         this.category = category;
+        this.subCategory = subCategory;
         this.address = address;
-        this.coordinate = coordinate;
+        this.coordinate_lat = coordinate_lat;
+        this.coordinate_lng=coordinate_lng;
         this.suitableFor = suitableFor;
 
     }
@@ -78,13 +82,31 @@ public class Yelp {
         this.address = address;
     }
 
-    //Coordinate
-    public String getCoordinate() {
-        return coordinate;
+    //longitude
+    public String getCoordinate_lng() {
+        return coordinate_lng;
     }
 
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate_lng(String coordinate_lng) {
+        this.coordinate_lng = coordinate_lng;
+    }
+
+    //latitude
+    public String getCoordinate_lat() {
+        return coordinate_lat;
+    }
+
+    public void setCoordinate_lat(String coordinate_lat) {
+        this.coordinate_lat = coordinate_lat;
+    }
+
+    //subCategory
+    public String getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
     }
 
 }

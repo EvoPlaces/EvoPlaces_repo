@@ -36,6 +36,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
@@ -54,6 +57,11 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
     public static Bitmap image;
     private String userChoosenTask;
+
+    //sending fields
+    static HttpURLConnection urlConnection;
+    URL url;
+    String uri = "http://23.227.201.71:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,7 +263,6 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
                         }
 
                         else {
-                            String uri = "asd";
                             myTask task = new myTask();
                             task.execute(uri);
 
@@ -325,17 +332,27 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
         @Override
         protected String doInBackground(String... params) {
 
-            String uri = params[0];
-            int result = dbManager.postDataHttpUrlConnection();
-            String line = "result is "+ result;
+            try {
+                url = new URL(uri);
+                urlConnection = (HttpURLConnection) url.openConnection();
 
-            return line;
+                int result = dbManager.postDataHttpUrlConnection();
+
+
+                return String.valueOf(result);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "nope";
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "nope at all";
+            }
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            next_bttn.setText(s);
+            Toast.makeText(MainActivity2.this, s, Toast.LENGTH_SHORT).show();
         }
     }
 
