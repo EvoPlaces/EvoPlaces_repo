@@ -192,7 +192,11 @@ public class MainActivity2 extends AppCompatActivity {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
+
+
+        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT).toString();
+
+        Log.d("img string", MainActivity1.Encodedimg.toString());
 
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -292,7 +296,7 @@ public class MainActivity2 extends AppCompatActivity {
                         ShowProgress.showProgress(MainActivity2.this,"deleting database...",20);
 
                         clearDBdialog.dismiss();
-                        Log.d("*************", String.valueOf(dbManager.getDataBaseSize()));
+                        Toast.makeText(MainActivity2.this, String.valueOf(dbManager.getDataBaseSize()), Toast.LENGTH_SHORT).show();;
 
                     }
                 });

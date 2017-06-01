@@ -116,15 +116,16 @@ public class MainActivity1 extends AppCompatActivity {
 
                         Yelp yelp = new Yelp
                                 (name_Edittxt.getText().toString(),
-                                        phone_Editxt.getText().toString(),
-                                        Encodedimg,
-                                        category_Edittxt.getText().toString(),
-/*-------------------------        **   !!here is for sub category which will be added later!!   **   -------------------*/
-                                        "not yet for sub_category!",
-                                        address_Edittxt.getText().toString(),
-                                        Coordinate_lng,
-                                        Coordinate_lat,
-                                        suitableFor);
+                                            phone_Editxt.getText().toString(),
+                                            Encodedimg,
+                                            category_Edittxt.getText().toString(),
+    /*-------------------------        **   !!here is for sub category which will be added later!!   **   -------------------*/
+                                            "not yet for sub_category!",
+                                            address_Edittxt.getText().toString(),
+                                            Coordinate_lng,
+                                            Coordinate_lat,
+                                            suitableFor);
+
 
                         dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 

@@ -10,8 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
@@ -92,9 +92,8 @@ public class DataBaseManager {
             MainActivity2.urlConnection.setDoOutput(true);
             MainActivity2.urlConnection.setDoInput(true);
             MainActivity2.urlConnection.setUseCaches(false);
+            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 //            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
-            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
-            MainActivity2.urlConnection.setRequestProperty("charset", "UTF-8");
             MainActivity2.urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
             MainActivity2.urlConnection.connect();
             MainActivity2.urlConnection.setConnectTimeout(10000);
@@ -105,8 +104,7 @@ public class DataBaseManager {
             */
             cursor.moveToFirst();
 
-            int i = getDataBaseSize();
-            int j = 0;
+
             JSONArray total = new JSONArray();
             for(Yelp1CursorWrapper cursoR = cursor ; !cursoR.isAfterLast() ; cursoR.moveToNext()){
                 JSONObject jsonParam = new JSONObject();
@@ -123,12 +121,14 @@ public class DataBaseManager {
 
                 total.put(jsonParam);
 
-                j ++;
             }
 
 
-            DataOutputStream wr = new DataOutputStream(MainActivity2.urlConnection.getOutputStream());
-            wr.writeBytes(total.toString());
+//            DataOutputStream wr = new DataOutputStream(MainActivity2.urlConnection.getOutputStream());
+            OutputStreamWriter wr = new OutputStreamWriter(
+                    MainActivity2.urlConnection.getOutputStream(), "UTF-8");
+
+            wr.write(total.toString());
             wr.flush();
             wr.close();
 
