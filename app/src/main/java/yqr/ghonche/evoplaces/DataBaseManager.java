@@ -92,10 +92,10 @@ public class DataBaseManager {
             MainActivity2.urlConnection.setDoOutput(true);
             MainActivity2.urlConnection.setDoInput(true);
             MainActivity2.urlConnection.setUseCaches(false);
+//            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
             MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
-
+            MainActivity2.urlConnection.setRequestProperty("charset", "UTF-8");
             MainActivity2.urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
-
             MainActivity2.urlConnection.connect();
             MainActivity2.urlConnection.setConnectTimeout(10000);
             MainActivity2.urlConnection.setReadTimeout(10000);

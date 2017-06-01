@@ -69,6 +69,14 @@ public class MainActivity1 extends AppCompatActivity {
 
         dataBaseManager = new DataBaseManager(MainActivity1.this);
 
+        ActivityCompat.requestPermissions(MainActivity1.this,
+                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                1);
+
+        ActivityCompat.requestPermissions(MainActivity1.this,
+                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                1);
+
         SaveBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +153,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                         Log.d("*****************", String.valueOf(dataBaseManager.getDataBaseSize()));
 
-                        Toast.makeText(MainActivity1.this, dataBaseManager.getDataBaseSize(), Toast.LENGTH_SHORT).show();
+
                         Toast.makeText(MainActivity1.this, "this place saved", Toast.LENGTH_LONG).show();
 
                     }
