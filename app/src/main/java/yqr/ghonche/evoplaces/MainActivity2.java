@@ -58,6 +58,7 @@ public class MainActivity2 extends AppCompatActivity {
     //sending fields
     static HttpURLConnection urlConnection;
     URL url;
+    //this is for sending to the server
     String uri = "http://23.227.201.71:3000/";
 
     @Override
