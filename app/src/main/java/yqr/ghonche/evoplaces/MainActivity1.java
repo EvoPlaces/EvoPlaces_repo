@@ -129,6 +129,10 @@ public class MainActivity1 extends AppCompatActivity {
 //                                Cordinate_Edittxt.getText().toString() + "suitable for:   " +
 //                                Integer.parseInt(suitableFor));
 
+
+
+
+
                         ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
                         phone_Editxt.setText("");
