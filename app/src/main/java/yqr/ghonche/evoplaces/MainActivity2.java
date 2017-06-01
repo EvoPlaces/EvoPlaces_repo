@@ -28,9 +28,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.vansuita.pickimage.bean.PickResult;
-import com.vansuita.pickimage.listeners.IPickResult;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MainActivity2 extends AppCompatActivity implements IPickResult {
+public class MainActivity2 extends AppCompatActivity {
 
     public static ImageView imageView=null;
     private Button next_bttn;
@@ -216,9 +213,9 @@ public class MainActivity2 extends AppCompatActivity implements IPickResult {
 
     //------------------
 
-    @Override
-    public void onPickResult(PickResult r) {
-    }//onpickresult
+//    @Override
+//    public void onPickResult(PickResult r) {
+//    }//onpickresult
 
 
 
