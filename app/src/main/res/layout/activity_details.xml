@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
+    android:fillViewport="true">
 
 
 <LinearLayout
@@ -56,7 +56,9 @@
         android:layout_alignEnd="@+id/phone_edittxt_id"
         android:layout_marginTop="30dp"
         android:id="@+id/category_edittxt_id"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        />
 
     <EditText
         android:layout_width="match_parent"
@@ -182,6 +184,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/restaurant_chk_id"
                 android:textStyle="normal|bold"
+                android:layout_gravity="end"
                 android:textAlignment="textEnd" />
 
             <CheckBox
@@ -190,6 +193,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fastfood_chk_id"
                 android:textStyle="normal|bold"
+                android:layout_gravity="end"
                 android:textAlignment="textEnd" />
 
             <CheckBox
@@ -198,6 +202,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/barbecue_chk_id"
                 android:textAlignment="textEnd"
+                android:layout_gravity="end"
                 android:textStyle="normal|bold" />
         </LinearLayout>
 
@@ -212,7 +217,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/pazandegi_chk_id"
                 android:textStyle="normal|bold"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:layout_gravity="end"/>
 
             <CheckBox
                 android:text="کافه"
@@ -220,7 +226,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cafe_chk_id"
                 android:textStyle="normal|bold"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:layout_gravity="end"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -247,5 +254,7 @@
         android:textColor="@color/colorAccent"/>
 
 
-</LinearLayout>
+
+
+   </LinearLayout>
 </ScrollView>

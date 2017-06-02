@@ -305,16 +305,4 @@ public class MainActivity1 extends AppCompatActivity {
     }
 
 
-
-//
-//    private ArrayAdapter<String> Adapter(Context context) {
-//
-//        String[] addresses = new String[5];
-//        addresses [0] = "abc";
-//        addresses [0] = "xyz";
-//        addresses [0] = "qrs";
-//
-//        return new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, addresses);
-//    }
-
 }
