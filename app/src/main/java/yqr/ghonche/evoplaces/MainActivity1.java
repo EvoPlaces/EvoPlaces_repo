@@ -37,6 +37,13 @@ public class MainActivity1 extends AppCompatActivity {
     CheckBox date_chk;
     CheckBox working_chk;
     CheckBox group_chk;
+    EditText description ;
+
+    CheckBox restaurant_chk;
+    CheckBox fastfood_chk;
+    CheckBox pazandegi_chk;
+    CheckBox cafe_chk;
+    CheckBox barbecue_chk;
 
     String Coordinate_lng = "";
     String Coordinate_lat = "";
@@ -66,8 +73,15 @@ public class MainActivity1 extends AppCompatActivity {
         GetCordinateBttn = (Button) findViewById(R.id.getCordinate_bttn_id);
         dataBaseManager = new DataBaseManager(MainActivity1.this);
         locationServiceManager = new LocationServiceManager(getApplicationContext(), MainActivity1.this);
-
         dataBaseManager = new DataBaseManager(MainActivity1.this);
+        description = (EditText) findViewById(R.id.description_txtView_id);
+
+        restaurant_chk = (CheckBox) findViewById(R.id.restaurant_chk_id);
+        fastfood_chk = (CheckBox) findViewById(R.id.fastfood_chk_id);
+        pazandegi_chk = (CheckBox) findViewById(R.id.pazandegi_chk_id);
+        barbecue_chk = (CheckBox) findViewById(R.id.barbecue_chk_id);
+        cafe_chk = (CheckBox) findViewById(R.id.cafe_chk_id);
+
 
         ActivityCompat.requestPermissions(MainActivity1.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -76,6 +90,21 @@ public class MainActivity1 extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity1.this,
                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                 1);
+      //============================
+
+
+
+//
+//        AutoCompleteTextView autoCompleteTextView1 =
+//                (AutoCompleteTextView) findViewById(R.id.description_txtView_id);
+//        autoCompleteTextView1.setAdapter(Adapter(MainActivity1.this));
+//
+//
+
+
+
+        //=====================
+
 
         SaveBttn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,15 +141,41 @@ public class MainActivity1 extends AppCompatActivity {
                     }
 
 
-                    if (b) {
+                    String category = "";
+
+                    boolean c = false;
+                    if (restaurant_chk.isChecked()) {
+                        category = category.concat(restaurant_chk.getText().toString()+" , ");
+                        c = true;
+                    }
+                    if (fastfood_chk.isChecked()) {
+                        category = category.concat(fastfood_chk.getText().toString()+" , ");
+                        c = true;
+                    }
+                    if (pazandegi_chk.isChecked()) {
+                        category = category.concat(pazandegi_chk.getText().toString()+" , ");
+                        c = true;
+                    }
+                    if (barbecue_chk.isChecked()) {
+                        category = category.concat(barbecue_chk.getText().toString()+" , ");
+                        c = true;
+                    }if (cafe_chk.isChecked()) {
+                        category = category.concat(cafe_chk.getText().toString()+" , ");
+                        c = true;
+                    }
+
+                    Log.d("cat",category);
+
+
+                    if (b && c) {
 
                         Yelp yelp = new Yelp
                                 (name_Edittxt.getText().toString(),
                                             phone_Editxt.getText().toString(),
                                             Encodedimg,
-                                            category_Edittxt.getText().toString(),
+                                            category,
     /*-------------------------        **   !!here is for sub category which will be added later!!   **   -------------------*/
-                                            "not yet for sub_category!",
+                                            description.getText().toString(),
                                             address_Edittxt.getText().toString(),
                                             Coordinate_lng,
                                             Coordinate_lat,
@@ -139,9 +194,6 @@ public class MainActivity1 extends AppCompatActivity {
 //                                Integer.parseInt(suitableFor));
 
 
-
-
-
                         ShowProgress.showProgress(MainActivity1.this, "sending data to database...", 10);
 
                         phone_Editxt.setText("");
@@ -150,6 +202,16 @@ public class MainActivity1 extends AppCompatActivity {
                         address_Edittxt.setText("");
                         Cordinate_Edittxt.setText("");
                         phone_Editxt.setText("");
+                        restaurant_chk.setChecked(false);
+                        fastfood_chk.setChecked(false);
+                        cafe_chk.setChecked(false);
+                        pazandegi_chk.setChecked(false);
+                        barbecue_chk.setChecked(false);
+                        family_chk.setChecked(false);
+                        working_chk.setChecked(false);
+                        group_chk.setChecked(false);
+                        date_chk.setChecked(false);
+
                         MainActivity2.imageView.setImageResource(R.drawable.galleryicon2);
 
                         Log.d("*****************", String.valueOf(dataBaseManager.getDataBaseSize()));
@@ -159,7 +221,10 @@ public class MainActivity1 extends AppCompatActivity {
 
                     }
                     else {
-                        Toast.makeText(MainActivity1.this, "check at least one checkbox", Toast.LENGTH_LONG).show();
+                        if (!b)
+                        Toast.makeText(MainActivity1.this, "what is this place suitable for?? check at least on.", Toast.LENGTH_LONG).show();
+                        if (!c)
+                            Toast.makeText(MainActivity1.this, "check one category", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -181,49 +246,6 @@ public class MainActivity1 extends AppCompatActivity {
                 ActivityCompat.requestPermissions(MainActivity1.this,
                         new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
-
-                //----------------------------------------------TRY1------------------------------------
-//                    // instantiate the location manager, note you will need to request permissions in your manifest
-//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                    // get the last know location from your location manager.
-//                    if (ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                            != PackageManager.PERMISSION_GRANTED &&
-//                            ActivityCompat.checkSelfPermission(MainActivity1.this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-//                                    != PackageManager.PERMISSION_GRANTED) {
-//                        // TODO: Consider calling
-//                        //    ActivityCompat#requestPermissions
-//                        // here to request the missing permissions, and then overriding
-//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                        //                                          int[] grantResults)
-//                        // to handle the case where the user grants the permission. See the documentation
-//                        // for ActivityCompat#requestPermissions for more details.
-//                        return;
-//                    }
-//
-//                    Location location = locationManager.
-//                            getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                        // now get the lat/lon from the location and do something with it.4
-//                    Toast.makeText(MainActivity1.this,
-//                            location.getLatitude()+"    ___  "+location.getLongitude(), Toast.LENGTH_LONG);
-////                        nowDoSomethingWith(location.getLatitude(), location.getLongitude());
-
-
-                //----------------------------------------TRY2--------------------------------------
-
-
-//                Intent intent=new Intent(MainActivity1.this, MapsActivity.class);
-//
-//                startActivity(intent);
-
-//
-//                LatLng currentLatLng =
-//                        new LatLng(locationServiceManager.getlatitude(),
-//                                locationServiceManager.getlongtitude());
-//
-//                Cordinate_Edittxt.setText(currentLatLng+" ");
-
-
-                //--------------------------------TRY3-----------------------------------------------
 
 
                 ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(getApplicationContext());
@@ -280,7 +302,19 @@ public class MainActivity1 extends AppCompatActivity {
             }
         });
 
-
-
     }
+
+
+
+//
+//    private ArrayAdapter<String> Adapter(Context context) {
+//
+//        String[] addresses = new String[5];
+//        addresses [0] = "abc";
+//        addresses [0] = "xyz";
+//        addresses [0] = "qrs";
+//
+//        return new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, addresses);
+//    }
+
 }

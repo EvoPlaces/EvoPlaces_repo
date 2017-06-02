@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
+
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +19,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="yqr.ghonche.evoplaces.MainActivity1"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:isScrollContainer="true">
 
     <EditText
         android:layout_width="match_parent"
@@ -21,7 +30,8 @@
         android:ems="10"
         android:id="@+id/name_edittxt_id"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -32,7 +42,8 @@
         android:layout_below="@+id/name_edittxt_id"
         android:layout_marginTop="29dp"
         android:id="@+id/phone_edittxt_id"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -58,16 +69,18 @@
         android:id="@+id/address_edittxt_id"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_above="@+id/getCordinate_bttn_id"
         android:layout_weight="0.37" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:orientation="horizontal"
         android:id="@+id/cordinate_linearLayout_id"
-        android:layout_weight="0.36">
+        android:layout_weight="0.40"
+        android:layout_height="80dp">
 
 
         <EditText
@@ -84,6 +97,7 @@
             android:id="@+id/getCordinate_bttn_id"
             android:layout_alignBottom="@+id/save_bttn_id"
             android:layout_alignEnd="@+id/save_bttn_id"
+            android:layout_alignRight="@+id/save_bttn_id"
             android:textColor="@color/colorAccent"
             android:layout_width="160dp" />
 
@@ -92,8 +106,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.17">
+        android:layout_weight="0.25"
+        android:layout_height="120dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -143,6 +157,83 @@
 
     </LinearLayout>
 
+    <TextView
+        android:text="select a Category:"
+        android:layout_width="match_parent"
+        android:id="@+id/textView2"
+        android:layout_height="30dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="normal|bold"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_width="350dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="150dp">
+
+            <CheckBox
+                android:text="رستوران"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/restaurant_chk_id"
+                android:textStyle="normal|bold"
+                android:textAlignment="textEnd" />
+
+            <CheckBox
+                android:text="فست فود"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fastfood_chk_id"
+                android:textStyle="normal|bold"
+                android:textAlignment="textEnd" />
+
+            <CheckBox
+                android:text="باربیکیو"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/barbecue_chk_id"
+                android:textAlignment="textEnd"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="150dp"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:text="پزندگی"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pazandegi_chk_id"
+                android:textStyle="normal|bold"
+                android:textAlignment="textEnd" />
+
+            <CheckBox
+                android:text="کافه"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cafe_chk_id"
+                android:textStyle="normal|bold"
+                android:textAlignment="textEnd" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/description_txtView_id"
+        android:layout_weight="0.43"
+        android:layout_height="wrap_content"
+        android:hint="write a description"
+        android:textAlignment="center"
+        />
+
     <Button
         android:text="Save this place to DB     "
         android:layout_width="378dp"
@@ -152,7 +243,9 @@
         android:layout_marginEnd="15dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:textColor="@color/colorAccent"/>
 
 
 </LinearLayout>
+</ScrollView>
