@@ -191,7 +191,7 @@ public class MainActivity2 extends AppCompatActivity {
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
 
         MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT).toString();
