@@ -59,7 +59,7 @@ public class MainActivity2 extends AppCompatActivity {
     static HttpURLConnection urlConnection;
     URL url;
     //this is for sending to the server
-    String uri = "http://23.227.201.71:3000/";
+    String uri = "http://23.227.201.71:3000/api/send/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
