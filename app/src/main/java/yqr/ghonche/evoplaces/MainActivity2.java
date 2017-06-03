@@ -59,7 +59,7 @@ public class MainActivity2 extends AppCompatActivity {
     static HttpURLConnection urlConnection;
     URL url;
     //this is for sending to the server
-    String uri = "http://23.227.201.71:3000/api/send/";
+    String uri = "http://23.227.201.71:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,17 +184,17 @@ public class MainActivity2 extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        image = bm;
+        image=bm;
         imageView.setImageBitmap(bm);
     }
 
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
 
-        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
+        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT).toString();
 
         Log.d("img string", MainActivity1.Encodedimg.toString());
 
