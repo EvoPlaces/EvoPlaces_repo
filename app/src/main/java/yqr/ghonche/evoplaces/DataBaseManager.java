@@ -119,6 +119,8 @@ public class DataBaseManager {
                 jsonParam.put("phoneNumber", yelp.getPhone());
                 jsonParam.put("picAddress", yelp.getPicture());
 
+                Log.d("img from db",yelp.getPicture());
+
                 total.put(jsonParam);
 
             }
@@ -129,6 +131,7 @@ public class DataBaseManager {
                     MainActivity2.urlConnection.getOutputStream(), "UTF-8");
 
             wr.write(total.toString());
+//            wr.write(a.toString());
             wr.flush();
             wr.close();
 
