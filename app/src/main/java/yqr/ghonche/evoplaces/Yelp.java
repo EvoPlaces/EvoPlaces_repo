@@ -109,4 +109,21 @@ public class Yelp {
         this.subCategory = subCategory;
     }
 
+    public String toString(){
+
+        String total = "";
+
+        total += "name =" + this.name + "\n";
+        total += "phone =" + this.phone + "\n";
+//        total += "picture =" + this.picture + "\n";
+        total += "category =" + this.category + "\n";
+        total += "subcategory =" + this.subCategory + "\n";
+        total += "lat =" + this.coordinate_lat + "\n";
+        total += "long =" + this.coordinate_lng + "\n";
+        total += "suit =" + this.suitableFor + "\n";
+        total += "address =" + this.address + "\n";
+
+        return total;
+    }
+
 }

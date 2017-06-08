@@ -23,12 +23,7 @@ public class Yelp1CursorWrapper extends CursorWrapper {
         String phone = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.PHONE));
         String picture = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.PIC));
         String category = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CAT));
-        String sub_category;
-        try{
-            sub_category = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CAT_SUB));
-        }catch (Exception e){
-            sub_category = "not yet!";
-        }
+        String sub_category = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CAT_SUB));
         String address = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.ADDRESS));
         String coordinate_lng = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CRD_LNG));
         String coordinate_lat = getString(getColumnIndex(DataBaseSchema.Yelp1.culs.CRD_LAT));

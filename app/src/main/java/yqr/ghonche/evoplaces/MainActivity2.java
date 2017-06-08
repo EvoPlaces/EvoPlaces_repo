@@ -100,7 +100,7 @@ public class MainActivity2 extends AppCompatActivity {
                 if(imageView.equals(null)){
 
                     Toast.makeText(MainActivity2.this,
-                            "That is nt fair. tis should be MOSTAFA [-(",
+                            "That is nt fair. this should be MOSTAFA [-(",
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -191,10 +191,9 @@ public class MainActivity2 extends AppCompatActivity {
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 99, bytes);
 
-
-        MainActivity1.Encodedimg= Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT).toString();
+        MainActivity1.Encodedimg = Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT).toString();
 
         Log.d("img string", MainActivity1.Encodedimg.toString());
 

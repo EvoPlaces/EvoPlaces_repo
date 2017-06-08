@@ -43,6 +43,7 @@ public class DataBaseManager {
         values.put(DataBaseSchema.Yelp1.culs.PHONE, ylp.getPhone());
         values.put(DataBaseSchema.Yelp1.culs.PIC, ylp.getPicture());
         values.put(DataBaseSchema.Yelp1.culs.CAT, ylp.getCategory());
+        values.put(DataBaseSchema.Yelp1.culs.CAT_SUB, ylp.getSubCategory());
         values.put(DataBaseSchema.Yelp1.culs.ADDRESS, ylp.getAddress());
         values.put(DataBaseSchema.Yelp1.culs.CRD_LNG, ylp.getCoordinate_lng());
         values.put(DataBaseSchema.Yelp1.culs.CRD_LAT, ylp.getCoordinate_lat());
@@ -89,16 +90,24 @@ public class DataBaseManager {
         try {
 
             MainActivity2.urlConnection.setRequestMethod("POST");
+            Log.d("***","***");
             MainActivity2.urlConnection.setDoOutput(true);
+            Log.d("****","***");
             MainActivity2.urlConnection.setDoInput(true);
+            Log.d("*****","***");
             MainActivity2.urlConnection.setUseCaches(false);
+            Log.d("******","***");
             MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            Log.d("*******","***");
 //            MainActivity2.urlConnection.setRequestProperty("Content-Type", "application/json");
             MainActivity2.urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
+            Log.d("********","***");
             MainActivity2.urlConnection.connect();
+            Log.d("*********","***");
             MainActivity2.urlConnection.setConnectTimeout(10000);
+            Log.d("**********","***");
             MainActivity2.urlConnection.setReadTimeout(10000);
-
+            Log.d("***********","***");
             /*
             Create JSONObject here
             */
@@ -108,13 +117,17 @@ public class DataBaseManager {
             JSONArray total = new JSONArray();
             for(Yelp1CursorWrapper cursoR = cursor ; !cursoR.isAfterLast() ; cursoR.moveToNext()){
                 JSONObject jsonParam = new JSONObject();
+
                 Yelp yelp = cursor.getYelp1();
+
+                Log.d("yelp json", yelp.toString());
 
                 jsonParam.put("Name" , yelp.getName());
                 jsonParam.put("Description", yelp.getAddress());
                 jsonParam.put("x_coordinate", yelp.getCoordinate_lng());
                 jsonParam.put("y_coordinate", yelp.getCoordinate_lat());
-                jsonParam.put("subCategoryName", yelp.getSubCategory());
+                jsonParam.put("subCategoryName", "test");
+//                jsonParam.put("subCategoryName", yelp.getSubCategory());
                 jsonParam.put("categoryName", yelp.getCategory());
                 jsonParam.put("phoneNumber", yelp.getPhone());
                 jsonParam.put("picAddress", yelp.getPicture());

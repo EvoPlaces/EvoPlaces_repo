@@ -29,7 +29,7 @@ public class MainActivity1 extends AppCompatActivity {
     Button GetCordinateBttn;
     EditText name_Edittxt;
     EditText phone_Editxt;
-    EditText category_Edittxt;
+//    EditText category_Edittxt;
     EditText address_Edittxt;
     EditText Cordinate_Edittxt;
     LocationServiceManager locationServiceManager;
@@ -66,7 +66,7 @@ public class MainActivity1 extends AppCompatActivity {
 
         name_Edittxt = (EditText) findViewById(R.id.name_edittxt_id);
         phone_Editxt = (EditText) findViewById(R.id.phone_edittxt_id);
-        category_Edittxt = (EditText) findViewById(R.id.category_edittxt_id);
+//        category_Edittxt = (EditText) findViewById(R.id.category_edittxt_id);
         address_Edittxt = (EditText) findViewById(R.id.address_edittxt_id);
         Cordinate_Edittxt = (EditText) findViewById(R.id.cordinate_edittxt_id);
         SaveBttn = (Button) findViewById(R.id.save_bttn_id);
@@ -113,7 +113,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                 if (name_Edittxt.getText().toString().equals("") ||
                         address_Edittxt.getText().toString().equals("") ||
-                        category_Edittxt.getText().toString().equals("") ||
+
                         phone_Editxt.getText().toString().equals("")) {
 
 
@@ -181,7 +181,7 @@ public class MainActivity1 extends AppCompatActivity {
                                             Coordinate_lat,
                                             suitableFor);
 
-
+                        Log.d("yelp",yelp.toString());
                         dataBaseManager.add_to_yelp_firstProject_DataBase(yelp);
 
 
@@ -198,7 +198,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                         phone_Editxt.setText("");
                         name_Edittxt.setText("");
-                        category_Edittxt.setText("");
+//                        category_Edittxt.setText("");
                         address_Edittxt.setText("");
                         Cordinate_Edittxt.setText("");
                         phone_Editxt.setText("");
